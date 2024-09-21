@@ -1,12 +1,12 @@
 "use strict";
 
 const $ = require('jquery');
-require('bootstrap');
+const bootstrap = require('bootstrap');
 
-import "../scss/index.scss";
+import '../scss/index.scss';
 import '@fortawesome/fontawesome-free/js/all';
 import "magnific-popup";
-
+require("jquery-easing");
 $(() => {
   // Smooth scrolling using jQuery easing
   $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {
@@ -32,16 +32,18 @@ $(() => {
     }
   });
 
-  // Closes responsive menu when a scroll trigger link is clicked
-  $('.js-scroll-trigger').click(function() {
-    $('.navbar-collapse').collapse('hide');
+  document.querySelectorAll('.js-scroll-trigger').forEach(item => {
+    item.addEventListener('click', () => {
+      const navbarCollapse = document.querySelector('.navbar-collapse');
+      if (navbarCollapse) {
+        navbarCollapse.classList.remove('show'); // This hides the navbar (Bootstrap uses 'show' to display it)
+      }
+    });
   });
 
-  // Activate scrollspy to add active class to navbar items on scroll
-  $('body').scrollspy({
-    target: '#mainNav',
-    offset: 80
-  });
+  new bootstrap.ScrollSpy(document.body, {
+    target: '#mainNav'
+  })
 
   // Collapse Navbar
   var navbarCollapse = function() {
