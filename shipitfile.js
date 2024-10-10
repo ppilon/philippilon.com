@@ -23,6 +23,9 @@ module.exports = function (shipit) {
         shipit.log('Building project for production...');
         await shipit.local('npm install');  // Install dependencies
         await shipit.local('npm run build');  // Run the build process
+        await shipit.local('git add .');  // Stage changes
+        await shipit.local(`git commit -m "Deploying build ${new Date().toISOString()}"`);  // Commit changes
+        await shipit.local('git push');  // Push changes to the repository
     });
 
     // Task to upload assets to S3 after building
